@@ -45,7 +45,7 @@ if __name__ == '__main__':
         df_sorted_by_name = df.groupby('name')
         # Print all IPs used by each process
         for name, group in df_sorted_by_name:
-            if name == 'Code.exe':
+            if name != 'lsass.exe' and name != 'POWERPNT.EXE' and name != 'OfficeClickToRun.exe' and name != 'OUTLOOK.EXE' and name != 'smartscreen.exe' and name != 'msedgewebview2.exe' and name != 'MpDefenderCoreService.exe' and name != 'BrokerAgent.exe' and name != 'svchost.exe' and name != 'CcmExec.exe' and name != 'System' and name != 'chrome.exe' and name != 'spoolsv.exe' and name != 'splunkd.exe' and name != 'EmaAgent.exe' and name != 'HealthService.exe' and name != 'Parity.exe' and name != 'PicaSvc2.exe' and name != 'cloudcode_cli.exe' and name != 'msedge.exe':
                 print(f"\n-------------------------------------------------Process: {name}----------------------------------------------------------")
                 ip_list = group['ip'].tolist()
                 for ip in ip_list:
@@ -55,13 +55,16 @@ if __name__ == '__main__':
                         print(f"Process: {name}, IP: {ip}, Hostname: {hostname}")
                     except socket.herror:
                         print(f"Process: {name}, IP: {ip}, Hostname: Unknown")
-
                     # Perform port lookup to get the service name
-                for port in group['port'].tolist():
-                    try:
-                        service_name = socket.getservbyport(port)
-                        print(f"Process: {name}, IP: {ip}, Port: {port}, Service: {service_name}")
-                    except socket.error:
-                        print(f"Process: {name}, IP: {ip}, Port: {port}, Service: Unknown")
+                    # for port in group['port'].tolist():
+                    #    try:
+                    #        service_name = socket.getservbyport(port)
+                    #        print(f"Process: {name}, IP: {ip}, Port: {port}, Service: {service_name}")
+                    #    except socket.error:
+                    #        print(f"Process: {name}, IP: {ip}, Port: {port}, Service: Unknown")
+        pids_array = []
+        names_array = []
+        raddr_ip_array = []
+        raddr_port_array = []
         time.sleep(1)
 
